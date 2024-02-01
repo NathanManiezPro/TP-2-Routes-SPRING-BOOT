@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.nathan.acteur.Acteur;
 import fr.nathan.acteur.dto.ActeurReduitDto;
 import fr.nathan.acteur.dto.ActeurSansFilmDto;
+import fr.nathan.film.dto.FilmAjoutActeurAFilmDto;
 import fr.nathan.film.dto.FilmCompletDto;
 import fr.nathan.film.dto.FilmReduitDto;
 import fr.nathan.realisateur.Realisateur;
@@ -86,4 +87,11 @@ public class FilmController {
     public Realisateur findRealisateursByFilm(@PathVariable Integer id) {
         return filmService.findById(id).getRealisateur();
     }
+
+    @PostMapping("/{id}/acteurs")
+    public FilmAjoutActeurAFilmDto addActeurByFilm(@PathVariable Integer id, @RequestBody Acteur acteur){
+        return filmService.AddActeurByFilmId(id, acteur);
+    }
+
+
 }
