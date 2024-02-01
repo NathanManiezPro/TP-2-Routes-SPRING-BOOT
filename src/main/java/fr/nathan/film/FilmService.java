@@ -6,11 +6,14 @@ import fr.nathan.acteur.ActeurService;
 import fr.nathan.acteur.dto.ActeurSansFilmDto;
 import fr.nathan.film.dto.FilmAjoutActeurAFilmDto;
 import fr.nathan.film.dto.FilmCompletDto;
+import fr.nathan.film.exceptions.BadRequestException;
+import fr.nathan.film.exceptions.FilmNotFoundException;
 import fr.nathan.realisateur.Realisateur;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,16 +34,33 @@ public class FilmService {
     }
 
     public Film save(Film film) {
+
+        verifyFilm(film);
+
         return filmRepository.save(film);
+    }
+
+    private static void verifyFilm(Film film) {
+        List<String> erreurs = new ArrayList<>();
+        if(film.getTitre() == null){
+           erreurs.add("Le titre est obligatoire");
+        }
+        if(film.getDateSortie() == null){
+            erreurs.add("La date de sortie est obligatoire");
+        }
+        if(film.getRealisateur() == null){
+           erreurs.add("Le Réalisateur est obligatoire");
+        }
+        if(!erreurs.isEmpty()){
+            throw new BadRequestException(erreurs);
+        }
     }
 
     public Film findById(Integer id) {
         return filmRepository.findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Film Non trouvé"
-                        )
+                        FilmNotFoundException::new
+
                 );
     }
 
