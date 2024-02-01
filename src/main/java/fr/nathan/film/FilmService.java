@@ -1,5 +1,6 @@
 package fr.nathan.film;
 
+import fr.nathan.acteur.Acteur;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,7 +16,7 @@ public class FilmService {
         this.filmRepository = filmRepository;
     }
 
-    public List<Film> findAll(){
+    public List<Film> findAll() {
         return filmRepository.findAll();
     }
 
@@ -28,7 +29,7 @@ public class FilmService {
                 .orElseThrow(
                         () -> new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,
-                                "Film non trouvé"
+                                "Film Non trouvé"
                         )
                 );
     }
@@ -42,12 +43,26 @@ public class FilmService {
         return filmRepository.save(film);
     }
 
-    public List<Film> findAllByTitre(String titre) {
-        return filmRepository.findAllByTitre(titre).orElseThrow(
-                () -> new ResponseStatusException(
+    public Film findByTitre(String titre) {
+        return filmRepository.findByTitre(titre)
+                .orElseThrow(
+                        () -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Aucun film avec le titre : " + titre
+                        )
+                );
+    }
+
+    public List<Film> findAllByRealisateurId(Integer id) {
+        return filmRepository.findAllByRealisateurId(id)
+                .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        "Titre non trouvé"
-                )
-        );
+                        "Aucun film ayant ce réalisateur"
+                ));
+    }
+
+    public List<Acteur> findActeursByFilm(Integer id) {
+        Film film = this.findById(id);
+        return film.getActeurs();
     }
 }

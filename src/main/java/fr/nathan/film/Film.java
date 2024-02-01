@@ -1,7 +1,5 @@
 package fr.nathan.film;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.nathan.acteur.Acteur;
 import fr.nathan.realisateur.Realisateur;
@@ -18,19 +16,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "film") // est par défaut le nom de la classe mais il est toujours bien de l'ajouter
+@Table(name = "film")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
 public class Film {
-
-
     @Id
     @GeneratedValue
     private Integer id;
-
-  //  @Column(name = "Nom de la colonne") // nom de la colonne dans la base de donnée
 
     @Column(nullable = false)
     private String titre;
@@ -39,22 +33,20 @@ public class Film {
     private LocalDate dateSortie;
 
     @Column(nullable = false)
-    private  int duree;
+    private int duree;
 
-    @Column(length = 500) // nb de caractere
-    private  String synopsis;
+    @Column(length = 500)
+    private String synopsis;
 
-    @ManyToOne(cascade = CascadeType.ALL) // Plusieurs Films vers 1 réalisateur
+    @ManyToOne // One Realisateur to Many Film
     @JoinColumn(name = "realisateur_id")
     private Realisateur realisateur;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(
             name = "acteur_film",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "acteur_id")
     )
-    private List<Acteur> acteurs= new ArrayList<>();
-
-
+    private List<Acteur> acteurs = new ArrayList<>();
 }

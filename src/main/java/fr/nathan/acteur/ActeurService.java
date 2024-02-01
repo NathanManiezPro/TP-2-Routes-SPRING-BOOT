@@ -1,11 +1,13 @@
 package fr.nathan.acteur;
 
-import fr.nathan.film.Film;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ActeurService {
@@ -15,31 +17,25 @@ public class ActeurService {
         this.acteurRepository = acteurRepository;
     }
 
-    public List<Acteur> findAll(){
-        return acteurRepository.findAll();
-    }
-    public Acteur save(Acteur acteur) {
-        return acteurRepository.save(acteur);
+    public Acteur save(Acteur entity) {
+        return acteurRepository.save(entity);
     }
 
-    public Acteur findById(Integer id) {
-        return acteurRepository.findById(id)
-                .orElseThrow(
-                        () -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Acteur non trouvé"
-                        )
-                );
+    public Acteur findById(Integer integer) {
+        return acteurRepository.findById(integer).orElseThrow(
+                () -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Acteur non trouvé"
+                )
+        );
     }
 
-    public void deleteById(Integer id) {
-        Acteur acteur = this.findById(id);
+    public void delete(Acteur acteur) {
+        this.findById(acteur.getId());
         acteurRepository.delete(acteur);
     }
 
-    public Acteur update(Acteur acteur) {
-        return acteurRepository.save(acteur);
+    public List<Acteur> findAll() {
+        return acteurRepository.findAll();
     }
-
-
 }
