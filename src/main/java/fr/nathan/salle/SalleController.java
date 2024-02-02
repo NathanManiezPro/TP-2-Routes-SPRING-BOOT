@@ -33,5 +33,8 @@ public class SalleController {
     public Salle update(@RequestBody Salle salle) {
         return salleService.update(salle);
     }
-
+    @GetMapping("/search")   // salles/search?capacite=10
+    public Salle findByCapacite(@RequestParam int capacite){
+        return salleService.findByCapacite(capacite);
+    }
 }

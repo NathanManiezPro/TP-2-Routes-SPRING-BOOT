@@ -1,6 +1,7 @@
 package fr.nathan.salle;
 
 
+import fr.nathan.film.Film;
 import fr.nathan.salle.Salle;
 import fr.nathan.salle.SalleRepository;
 import fr.nathan.seances.SeanceRepository;
@@ -44,6 +45,15 @@ public class SalleService {
 
     public Salle update(Salle salle) {
         return salleRepository.save(salle);
+    }
+    public Salle findByCapacite(int capacite) {
+        return salleRepository.findByCapacite(capacite)
+                .orElseThrow(
+                        () -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "La capacité max de la salle est de : " + capacite
+                        )
+                );
     }
 
 }

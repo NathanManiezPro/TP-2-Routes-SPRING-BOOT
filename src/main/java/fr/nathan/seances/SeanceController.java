@@ -25,10 +25,11 @@ public class SeanceController {
     public Seance save(@RequestBody Seance seance) {
         return seanceService.save(seance);
     }
-    @PostMapping ("/{id}")
+    @PostMapping("/{id}")
     public Seance findById(@PathVariable Long id) {
         return seanceService.findById(id);
     }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         seanceService.deleteById(id);
