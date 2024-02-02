@@ -45,6 +45,7 @@ public class FilmController {
 
         FilmCompletDto filmCompletDto = new FilmCompletDto();
         filmCompletDto.setId(film.getId());
+        filmCompletDto.setTitre(film.getTitre());
         filmCompletDto.setDuree(film.getDuree());
         filmCompletDto.setSynopsis(film.getSynopsis());
         filmCompletDto.setRealisateur(film.getRealisateur());

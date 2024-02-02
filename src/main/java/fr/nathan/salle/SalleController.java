@@ -34,8 +34,4 @@ public class SalleController {
         return salleService.update(salle);
     }
 
-    @GetMapping("/search") //   /salles/search?titre=toto
-    public Salle findByNumero(@RequestParam String numero) {
-        return salleService.findByNumero(numero);
-    }
 }

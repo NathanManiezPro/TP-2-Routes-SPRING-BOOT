@@ -3,7 +3,6 @@ package fr.nathan.seances;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.nathan.film.Film;
-import fr.nathan.realisateur.Realisateur;
 import fr.nathan.salle.Salle;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,19 +26,13 @@ public class Seance {
     @GeneratedValue
 
     private long id;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name ="film_id")
     private Film film;
+    @ManyToOne
+    @JoinColumn(name = "salle_id")
     private Salle salle;
     private Date date;
     private int placesDisponibles;
     private float prix;
-//     private List<Film> films = new ArrayList<>();
-
-
-
-
-    @ManyToOne // One Realisateur to Many Film
-    @JoinColumn(name = "realisateur_id")
-    private Realisateur realisateur;
 }

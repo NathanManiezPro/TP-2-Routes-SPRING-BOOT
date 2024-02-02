@@ -1,8 +1,6 @@
 package fr.nathan.ticket;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import fr.nathan.film.Film;
-import fr.nathan.realisateur.Realisateur;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;;
 import fr.nathan.seances.Seance;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +23,8 @@ public class Ticket {
     @Id
     @GeneratedValue
     private long id;
+    @ManyToOne
+    @JoinColumn(name = "seance_id")
     private Seance seance;
     private String nomClient;
     private int nombrePlaces;

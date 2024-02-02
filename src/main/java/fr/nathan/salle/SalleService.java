@@ -1,5 +1,9 @@
 package fr.nathan.salle;
 
+
+import fr.nathan.salle.Salle;
+import fr.nathan.salle.SalleRepository;
+import fr.nathan.seances.SeanceRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,8 +15,9 @@ public class SalleService {
     private final SalleRepository salleRepository;
 
     public SalleService(SalleRepository salleRepository) {
-        this.salleRepository= salleRepository;
+        this.salleRepository = salleRepository;
     }
+
 
     public List<Salle> findAll(){
         return salleRepository.findAll();
@@ -41,12 +46,4 @@ public class SalleService {
         return salleRepository.save(salle);
     }
 
-    public Salle findByNumero(String numero) {
-        return salleRepository.findByNumero(numero).orElseThrow(
-                () -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Numéro non trouvé"
-                )
-        );
-    }
 }
