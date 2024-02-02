@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.nathan.film.Film;
 import fr.nathan.realisateur.Realisateur;
+import fr.nathan.salle.Salle;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,14 +27,14 @@ public class Seance {
     @GeneratedValue
 
     private long id;
-//    @OneToMany
-// @JoinColumn(name ="film_id")
-//    private Film film;
-// private Salle salle;
+    @OneToMany
+    @JoinColumn(name ="film_id")
+    private Film film;
+    private Salle salle;
     private Date date;
     private int placesDisponibles;
     private float prix;
-//    private List<Film> films = new ArrayList<>();
+//     private List<Film> films = new ArrayList<>();
 
 
 
